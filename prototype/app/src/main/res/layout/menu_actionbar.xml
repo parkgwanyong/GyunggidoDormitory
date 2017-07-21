@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="#F0AEB8">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Daily Menu"
+        android:id="@+id/title"
+        android:textSize="30sp"
+        android:gravity="center_horizontal|center_vertical"/>
+
+
+</RelativeLayout>

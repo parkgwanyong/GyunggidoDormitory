@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:context="org.androidtown.gyunggido.MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/imageBus"
+        android:onClick="onBusClicked"
+        android:background="@drawable/bus"/>
+
+    <ImageView
+        android:id="@+id/imageDailyMenu"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="onMenuClicked"
+        android:background="@drawable/daily_menu"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/imageSleepOut"
+        android:onClick="onSleepOutClicked"
+        android:background="@drawable/sleepout"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/imageNotice"
+        android:onClick="onNoticeClicked"
+        android:background="@drawable/notice"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/imageRepair"
+        android:onClick="onRepairClicked"
+        android:background="@drawable/repair"/>
+
+</LinearLayout>
