@@ -1,6 +1,8 @@
 package org.androidtown.prototype;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -16,6 +21,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 public class MenuActivity extends AppCompatActivity {
     private TextView mon1;
@@ -53,6 +59,14 @@ public class MenuActivity extends AppCompatActivity {
     private TextView sun3;
     private TextView sun4;
     private TextView sun5;
+
+    private TableRow linMon;
+    private TableRow linTue;
+    private TableRow linWed;
+    private TableRow linThr;
+    private TableRow linFri;
+    private TableRow linSat;
+    private TableRow linSun;
     String menu[];
 
 
@@ -60,6 +74,22 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.BLACK);
+        }
+
+        linMon = (TableRow)findViewById(R.id.linMon);
+        linTue = (TableRow)findViewById(R.id.linTue);
+        linWed = (TableRow)findViewById(R.id.linWed);
+        linThr = (TableRow)findViewById(R.id.linThr);
+        linFri = (TableRow)findViewById(R.id.linFri);
+        linSat = (TableRow)findViewById(R.id.linSat);
+        linSun = (TableRow)findViewById(R.id.linSun);
+
         mon1 = (TextView)findViewById(R.id.mon1);
         mon2 = (TextView)findViewById(R.id.mon2);
         mon3 = (TextView)findViewById(R.id.mon3);
@@ -164,6 +194,8 @@ public class MenuActivity extends AppCompatActivity {
                             sat4.setText( getMenu(menu[33]));
                             sat5.setText( getMenu(menu[34]));
 
+                            setBackColor();
+
                         } catch(Exception e){
 
                         }
@@ -174,6 +206,43 @@ public class MenuActivity extends AppCompatActivity {
         }).start();
 
     }
+
+    private void setBackColor() {
+        Calendar cal = Calendar.getInstance();
+        int nWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+        try{
+            switch(nWeek){
+                case 1:
+                    linSun.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                case 2:
+                    linMon.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                case 3:
+                    linTue.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                case 4:
+                    linWed.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                case 5:
+                    linThr.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                case 6:
+                    linFri.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                case 7:
+                    linSat.setBackgroundColor(Color.parseColor("#F0AEB8"));
+                    break;
+                default:
+                    break;
+            }
+        } catch(Exception e){
+
+        }
+
+    }
+
 
     private String getMenu(String menu){
         try{

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff"
-    tools:context="org.androidtown.gyunggido.MainActivity">
+    tools:context="org.androidtown.prototype.MainActivity">
 
     <ImageView
         android:layout_width="match_parent"
