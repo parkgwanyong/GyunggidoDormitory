@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/new_login_gradients"
+    tools:context="org.androidtown.prototype.SleepActivity">
+
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/sleepout_toolbar"/>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/sleep_name_text"
+            android:layout_marginRight="30dp"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="#fff"
+            android:text="이름"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/sleep_building_text"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="#fff"
+            android:text="건물"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/sleep_roomNumber_text"
+            android:layout_marginLeft="30dp"
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="#fff"
+            android:text="방번호"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#f9d7db"/>
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/sleep_date_from_select_text"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:text="시작 날짜"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/sleep_date_to_select_text"
+            android:padding="10dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="15dp"
+            android:text="종료 날짜"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:textColor="#fff"
+            android:text="행선지 :"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:textColor="#fff"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:id="@+id/sleep_destination_edit"
+            android:hint="                     "
+            android:backgroundTint="#aaa"
+            android:padding="10dp"
+            android:textSize="15dp"
+            android:textColorHint="#aaaaaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sleep_submit_btn"
+        android:layout_gravity="right"
+        android:textSize="15dp"
+        android:textColor="#fff"
+        android:text="Submit"
+        android:background="#385194"
+        android:layout_marginRight="10dp"
+        android:padding="0dp"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+    <LinearLayout
+
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:padding="10dp"
+            android:text="시작 날짜"
+            android:gravity="center"
+            android:textColor="#fff" />
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:textColor="#fff"
+            android:text="~"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:padding="10dp"
+            android:text="종료 날짜"
+            android:textColor="#fff" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:padding="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="행선지"/>
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textColor="#e25049"
+            android:padding="2dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="취소"/>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#f9d7db"/>
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/sleep_display_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/sleep_date_from_display_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:padding="10dp"
+            android:text="시작 날짜"
+            android:textColor="#fff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:textColor="#fff"
+            android:text="~"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/sleep_date_to_display_txt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:padding="10dp"
+            android:text="종료날짜"
+            android:textColor="#fff" />
+
+        <TextView
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/sleep_destination_display_txt"
+            android:textColor="#fff"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="행선지"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="right">
+            <Button
+                android:id="@+id/sleep_cancel_display_btn"
+                android:layout_marginRight="15dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:background="@drawable/sleep_cancel_icon"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

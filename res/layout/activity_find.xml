@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@drawable/new_login_gradients">
+
+    <EditText
+
+        android:id="@+id/find_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/register_email"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColorHint="#d7d9de"
+        android:textSize="15dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f9d7db"/>
+
+    <EditText
+        android:id="@+id/find_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/login_user"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="Name"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColorHint="#d7d9de"
+        android:textSize="15dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f9d7db"/>
+    <EditText
+        android:id="@+id/find_birth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/register_birth"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:hint="Birth Date (ex.930623)"
+        android:inputType="number"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textColorHint="#d7d9de"
+        android:textSize="15dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f9d7db"/>
+    <LinearLayout
+        android:id="@+id/find_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/find_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/login_lock"
+        android:drawablePadding="12dp"
+        android:ems="10"
+        android:text="Password"
+        android:padding="8dp"
+        android:textColor="#e25049"
+        android:textSize="20dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#f9d7db"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/find_btn"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/background_login_btn"
+        android:clickable="true"
+        android:padding="10dp"
+        android:text="Find Password"
+        android:textAllCaps="false"
+        android:textColor="#1DC5FD"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/find_cancel_btn"
+        style="@style/Base.TextAppearance.AppCompat.Body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_cancel_btn"
+        android:clickable="true"
+        android:padding="10dp"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="15sp" />
+
+</LinearLayout>

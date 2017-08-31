@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.androidtown.prototype.AnonymousReadActivity">
+
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/anonymous_read_appbar"/>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/anonymous_read_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:text="Title"
+                android:padding="8dp"
+                android:textSize="15dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"/>
+
+            <TextView
+                android:textColor="#000000"
+                android:id="@+id/anonymous_read_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:minHeight="150dp"
+                android:padding="8dp"
+                android:text="Contents"
+                android:textSize="15dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/anonymous_read_comment_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/users_appBar">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"/>
+    <LinearLayout
+        android:windowSoftInputMode = "adjustPan"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+        <EditText
+
+            android:id="@+id/anonymous_read_comment_edit"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:hint="Comments"
+            android:padding="8dp"
+            android:textSize="15dp" />
+        <Button
+            android:id="@+id/anonymous_read_comment_submit_btn"
+            android:textSize="15dp"
+            android:textColor="#fff"
+            android:background="#385194"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="submit"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">prototype</string>
+    <string name="select_building">Select Building</string>
+    <string-array name="building_arrays">
+        <item>율곡관</item>
+        <item>다산관</item>
+        <item>신사관</item>
+        <item>추계관</item>
+    </string-array>
+
+    <string-array name="member_arrays">
+        <item>재사생</item>
+        <item>졸업생</item>
+        <item>직원</item>
+        <item>외부인</item>
+    </string-array>
+
+    <string-array name="repair_array">
+        <item>미확인</item>
+        <item>수리중</item>
+        <item>완료</item>
+    </string-array>
+
+</resources>
