@@ -147,10 +147,12 @@ public class BusActivity extends AppCompatActivity {
                 final StringBuilder builder3_1 = new StringBuilder();
                 final StringBuilder builder3_2 = new StringBuilder();
 
+                final String apiKey = "1%2BBzaBAcSlgVGh4IdbZiXNcXgTGtiE6tzQ8lEh1ATXxz%2B6iWZGb2N4VVNdbaKUlnuQT8ltI3McIEClf0TQwayA%3D%3D";
+
                 try {
-                    Document doc = Jsoup.connect("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?ServiceKey=1%2BBzaBAcSlgVGh4IdbZiXNcXgTGtiE6tzQ8lEh1ATXxz%2B6iWZGb2N4VVNdbaKUlnuQT8ltI3McIEClf0TQwayA%3D%3D&busRouteId=109900001").get();
-                    Document doc2 = Jsoup.connect("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?ServiceKey=1%2BBzaBAcSlgVGh4IdbZiXNcXgTGtiE6tzQ8lEh1ATXxz%2B6iWZGb2N4VVNdbaKUlnuQT8ltI3McIEClf0TQwayA%3D%3D&busRouteId=108900010").get();
-                    Document doc3 = Jsoup.connect("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?ServiceKey=1%2BBzaBAcSlgVGh4IdbZiXNcXgTGtiE6tzQ8lEh1ATXxz%2B6iWZGb2N4VVNdbaKUlnuQT8ltI3McIEClf0TQwayA%3D%3D&busRouteId=109900007").get();
+                    Document doc = Jsoup.connect("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?ServiceKey="+ apiKey + "&busRouteId=109900001").get();
+                    Document doc2 = Jsoup.connect("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?ServiceKey="+ apiKey + "&busRouteId=108900010").get();
+                    Document doc3 = Jsoup.connect("http://ws.bus.go.kr/api/rest/arrive/getArrInfoByRouteAll?ServiceKey="+ apiKey + "&busRouteId=109900007").get();
 
                     Elements links1_1 = doc.select("ServiceResult").select("msgBody").select("itemList").select("arrmsg1");
                     Elements links1_2 = doc.select("ServiceResult").select("msgBody").select("itemList").select("arrmsg2");

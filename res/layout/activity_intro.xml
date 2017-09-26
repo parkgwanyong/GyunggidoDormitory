@@ -2,28 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#42A5F5"
     android:orientation="vertical">
    <ImageView
-       android:layout_width="150dp"
-       android:layout_height="150dp"
-       android:background="@drawable/logo"
+       android:layout_width="70dp"
+       android:layout_height="70dp"
+       android:background="@drawable/lauch_book_icon"
        android:layout_gravity="center_horizontal"
-       android:layout_marginTop="80dp"/>
+       android:layout_marginTop="200dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="경기도장학관 어플리케이션"
-        android:textSize="20dp"
-        android:layout_marginTop="100dp"
-        android:textStyle="bold"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="PROTOTYPE"
-        android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"/>
 </LinearLayout>

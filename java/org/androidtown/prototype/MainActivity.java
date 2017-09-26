@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBarHandler mProgressBarHandler;
 
     private boolean sleepChecker = false;
+    private boolean repairChecker = false;
 
 
 
@@ -53,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbarTop = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbarTop);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        TextView mTitle = (TextView) toolbarTop.findViewById(R.id.toolbar_title);
 
         mProgressBarHandler = new ProgressBarHandler(this); // In onCreate
         mProgressBarHandler.show(); // To show the progress bar
@@ -65,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null){
             final String user_id = mAuth.getCurrentUser().getUid().toString();
@@ -76,12 +81,18 @@ public class MainActivity extends AppCompatActivity {
             ValueEventListener classListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
                     user = dataSnapshot.getValue(User.class);
                     mClass = user.getmClass();
                     if(!mClass.equals("재사생")){
                         sleepChecker = false;
                     }else{
                         sleepChecker = true;
+                    }
+                    if(mClass.equals("외부인") || mClass.equals("졸업생")){
+                        repairChecker = false;
+                    }else{
+                        repairChecker = true;
                     }
                     mMainLeftLayout.setVisibility(View.VISIBLE);
                     mMainRightLayout.setVisibility(View.VISIBLE);
@@ -92,11 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(MainActivity.this, "오류 "+databaseError.toString(),Toast.LENGTH_SHORT).show();
+                    mProgressBarHandler.hide();
 
                 }
             };
             mDatabase.addListenerForSingleValueEvent(classListener);
-
         }
 
 
@@ -116,6 +128,11 @@ public class MainActivity extends AppCompatActivity {
             sendToStart();
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
     }
 
     private void sendToStart() {
@@ -177,15 +194,23 @@ public class MainActivity extends AppCompatActivity {
     public void onRepairClicked(View v) {
         Animation repairAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.alpha);
         v.startAnimation(repairAnim);
-        repairAnim.setAnimationListener(animationRepairListener);
+        if(repairChecker) {
+            repairAnim.setAnimationListener(animationRepairListener);
+        }else{
+            Toast.makeText(MainActivity.this, mClass+"은 수리요청을 할 수 없습니다.",Toast.LENGTH_SHORT).show();
+        }
     }
 
     Animation.AnimationListener animationListener = new Animation.AnimationListener() {
         public void onAnimationStart(Animation animation) {}
         public void onAnimationEnd(Animation animation) {
-            Intent intent = new Intent(getApplicationContext(),BusActivity.class);
+            Intent intent = new Intent(MainActivity.this ,BusActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            //finish();
+
             //overridePendingTransition(R.anim.left_in,R.anim.left_out);
         }
         public void onAnimationRepeat(Animation animation) {}
@@ -195,8 +220,10 @@ public class MainActivity extends AppCompatActivity {
         public void onAnimationStart(Animation animation) {}
         public void onAnimationEnd(Animation animation) {
             Intent intent = new Intent(getApplicationContext(),MenuActivity.class);
+
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            finish();
             //
         }
         public void onAnimationRepeat(Animation animation) {}
@@ -208,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),NoticeActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            finish();
+
             //overridePendingTransition(R.anim.left_in,R.anim.left_out);
         }
         public void onAnimationRepeat(Animation animation) {}
@@ -218,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),BoardActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            finish();
             //overridePendingTransition(R.anim.left_in,R.anim.left_out);
         }
         public void onAnimationRepeat(Animation animation) {}
@@ -229,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),AnonymousActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            finish();
             //overridePendingTransition(R.anim.left_in,R.anim.left_out);
         }
         public void onAnimationRepeat(Animation animation) {}
@@ -240,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),SleepActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            finish();
             //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             //overridePendingTransition(R.anim.left_in,R.anim.left_out);
         }
@@ -252,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),RepairActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.left_in,R.anim.left_out);
+            finish();
             //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             //overridePendingTransition(R.anim.left_in,R.anim.left_out);
         }

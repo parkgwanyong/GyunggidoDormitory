@@ -51,7 +51,16 @@
                 android:text="Contents"
                 android:textSize="15dp" />
 
+
+            <ImageView
+                android:padding="10dp"
+                android:id="@+id/notice_read_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
             <View
+                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#E0E0E0" />
@@ -75,7 +84,7 @@
         android:windowSoftInputMode = "adjustPan"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:gravity="bottom"
         android:orientation="horizontal">
         <EditText
@@ -87,18 +96,19 @@
             android:layout_marginTop="4dp"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:hint="Comments"
+            android:hint="댓글"
             android:padding="8dp"
             android:textSize="15dp" />
         <Button
             android:id="@+id/notice_read_comment_submit_btn"
             android:textSize="15dp"
             android:textColor="#fff"
-            android:background="#385194"
+            android:background="#1C87B7"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="submit"/>
+            android:text="작성"/>
     </LinearLayout>
 
 </LinearLayout>

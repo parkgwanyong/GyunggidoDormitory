@@ -13,6 +13,7 @@ public class RepairMainDisplay {
     public String userID;
     private String time;
     private String order_time;
+    private String image_uri;
 
     public RepairMainDisplay() {
 
@@ -34,7 +35,15 @@ public class RepairMainDisplay {
         this.order_time = order_time;
     }
 
-    public RepairMainDisplay(String title, String status, String contents, String nickname, String userID, String time, String order_time) {
+    public String getImage_uri() {
+        return image_uri;
+    }
+
+    public void setImage_uri(String image_uri) {
+        this.image_uri = image_uri;
+    }
+
+    public RepairMainDisplay(String title, String status, String contents, String nickname, String userID, String time, String order_time, String image_uri) {
         this.title = title;
         this.status = status;
         this.contents = contents;
@@ -42,6 +51,8 @@ public class RepairMainDisplay {
         this.userID = userID;
         this.time = time;
         this.order_time = order_time;
+        this.image_uri = image_uri;
+
 
     }
 

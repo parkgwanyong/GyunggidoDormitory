@@ -12,6 +12,7 @@ public class Anonymous {
     public String userID;
     private String time;
     private String order_time;
+    private String image_uri;
 
     public Anonymous(){}
 
@@ -63,7 +64,15 @@ public class Anonymous {
         this.order_time = order_time;
     }
 
-    public Anonymous(String title, String contents, String name, String userID, String time, String order_time) {
+    public String getImage_uri() {
+        return image_uri;
+    }
+
+    public void setImage_uri(String image_uri) {
+        this.image_uri = image_uri;
+    }
+
+    public Anonymous(String title, String contents, String name, String userID, String time, String order_time, String image_uri) {
 
         this.title = title;
         this.contents = contents;
@@ -71,5 +80,7 @@ public class Anonymous {
         this.userID = userID;
         this.time = time;
         this.order_time = order_time;
+        this.image_uri = image_uri;
+
     }
 }

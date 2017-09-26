@@ -8,16 +8,26 @@ public class RepairComment {
     public String comment;
     public String nickname;
     public String time;
+    public String order_time;
 
 
     public RepairComment(){
 
     }
 
-    public RepairComment(String comment, String nickname, String time) {
+    public RepairComment(String comment, String nickname, String time, String order_time) {
         this.comment = comment;
         this.nickname = nickname;
         this.time = time;
+        this.order_time = order_time;
+    }
+
+    public String getOrder_time() {
+        return order_time;
+    }
+
+    public void setOrder_time(String order_time) {
+        this.order_time = order_time;
     }
 
     public String getComment() {

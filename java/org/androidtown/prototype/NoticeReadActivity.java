@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,12 +52,17 @@ public class NoticeReadActivity extends AppCompatActivity {
     private EditText mNoticeReadComments;
     private Button mNoticeReadSubmitBtn;
 
+    private ImageView mNoticeReadImage;
+
     private ProgressDialog mNoticeCommentDialog;
     private ProgressDialog mNoticeDeleteDialog;
+    private ProgressDialog mNoticeLoadDialog;
 
     private RecyclerView mNoticeReadList;
 
     private MenuItem deleteBtn;
+
+    private String imageUri = "empty";
 
     private User user;
     private String mNickname = "";
@@ -65,6 +73,11 @@ public class NoticeReadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_read);
+
+        mNoticeLoadDialog = new ProgressDialog(this);
+        mNoticeLoadDialog.setTitle("로딩중");
+        mNoticeLoadDialog.setMessage("잠시만 기다려주세요.");
+        mNoticeLoadDialog.show();
 
         mNoticeReadList = (RecyclerView) findViewById(R.id.notice_read_comment_list);
         mNoticeReadList.setNestedScrollingEnabled(false);
@@ -79,6 +92,8 @@ public class NoticeReadActivity extends AppCompatActivity {
         mNoticeReadSubmitBtn = (Button) findViewById(R.id.notice_read_comment_submit_btn);
         mNoticeReadTitle = (TextView) findViewById(R.id.notice_read_title);
         mNoticeReadContent = (TextView) findViewById(R.id.notice_read_contents);
+
+        mNoticeReadImage = (ImageView) findViewById(R.id.notice_read_image_view);
 
         final String user_id = getIntent().getStringExtra("user_id");
         //글 작성자
@@ -109,18 +124,47 @@ public class NoticeReadActivity extends AppCompatActivity {
 
                     mNoticeReadTitle.setText(noticeText.getTitle());
                     mNoticeReadContent.setText(noticeText.getContents());
+                    imageUri = noticeText.getImage_uri();
+                    if(!imageUri.equals("empty")){
+                        Picasso.with(getApplicationContext()).load(imageUri).into(mNoticeReadImage, new com.squareup.picasso.Callback(){
+                            @Override
+                            public void onSuccess() {
+                                mNoticeLoadDialog.dismiss();
+                            }
 
+                            @Override
+                            public void onError() {
+                                mNoticeLoadDialog.dismiss();
+                                Toast.makeText(NoticeReadActivity.this,"사진을 불러올 수 없습니다.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        mNoticeLoadDialog.dismiss();
+                    }
 
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                mNoticeLoadDialog.dismiss();
+                Toast.makeText(NoticeReadActivity.this, "오류 :" + databaseError.toString(),Toast.LENGTH_SHORT).show();
 
             }
         };
         mNoticeDatabase.addValueEventListener(noticeListener);
+
+        mNoticeReadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!imageUri.equals("empty")){
+                    Intent intent = new Intent(NoticeReadActivity.this, ImageZoomActivity.class);
+                    intent.putExtra("image_uri",imageUri);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.below_in, R.anim.below_out);
+                }
+            }
+        });
 
         ValueEventListener nicknameListener = new ValueEventListener() {
             @Override
@@ -178,6 +222,9 @@ public class NoticeReadActivity extends AppCompatActivity {
         commentMap.put("comment",comments);
         commentMap.put("nickname",mNickname);
         commentMap.put("time",currentDateandTime.toString());
+        commentMap.put("council",user.getCouncil());
+        commentMap.put("time",currentDateandTime.toString());
+        commentMap.put("order_time", String.valueOf((System.currentTimeMillis())));
         mNoticeCommentDatabse = mNoticeDatabase.child("comments").push();
         //final String commentTextKey = mNoticeCommentDatabse.getKey();
 
@@ -297,18 +344,22 @@ public class NoticeReadActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        Query noticeDatabaseQuery;
+        noticeDatabaseQuery = mNoticeDatabase.child("comments").orderByChild("order_time");
+
         FirebaseRecyclerAdapter<NoticeComment, noticeCommentViewHolder> firebaseCommentRecyclerAdapter = new FirebaseRecyclerAdapter<NoticeComment, noticeCommentViewHolder>(
                 NoticeComment.class,
                 R.layout.notice_comments_layout,
                 noticeCommentViewHolder.class,
-                mNoticeDatabase.child("comments")
+                noticeDatabaseQuery
 
         ){
             @Override
             protected void populateViewHolder(noticeCommentViewHolder viewHolder, NoticeComment model, int position) {
                 viewHolder.setDate(model.getTime());
                 viewHolder.setContent(model.getComment());
-                viewHolder.setNickname(mNickname);
+                viewHolder.setNickname(model.getNickname());
 
 
             }
@@ -339,5 +390,6 @@ public class NoticeReadActivity extends AppCompatActivity {
             mNoticeCommentDate = (TextView) mView.findViewById(R.id.notice_comments_date);
             mNoticeCommentDate.setText(date);
         }
+
     }
 }

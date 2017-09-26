@@ -59,6 +59,7 @@
             android:background="#f9d7db"/>
 
         <EditText
+            android:maxLength="15"
             android:id="@+id/register_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,12 +237,12 @@
                />
 
             <EditText
+                android:maxLength="3"
                 android:id="@+id/register_building_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@android:color/transparent"
-
                 android:drawablePadding="12dp"
                 android:ems="10"
                 android:hint="방 번호"

@@ -32,6 +32,8 @@
         android:gravity="center_horizontal"/>
 
     <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +45,7 @@
             android:background="@drawable/back"
             android:gravity="center_horizontal|center_vertical"
             android:layout_height="match_parent"
-            android:text="경기도 장학관"
+            android:text="경기도장학관"
             android:layout_weight="1"/>
 
         <LinearLayout
@@ -59,6 +61,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -68,13 +71,14 @@
 
                 <TextView
                     android:textColor="#fff"
-                    android:background="@drawable/back"
-                    android:gravity="center_horizontal"
+
+                    android:id="@+id/gFirstTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="0분"
                     android:layout_weight="2"
-                    android:id="@+id/gFirstTime"/>
+                    android:background="@drawable/back"
+                    android:gravity="center_horizontal"
+                    android:text="0분" />
 
             </LinearLayout>
 
@@ -84,6 +88,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:gravity="center_horizontal"
@@ -93,6 +98,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -109,6 +115,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -135,6 +143,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:gravity="center_horizontal"
@@ -144,6 +153,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -160,6 +170,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:gravity="center_horizontal"
@@ -169,6 +180,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -200,6 +212,8 @@
         android:gravity="center_horizontal"/>
 
     <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -207,11 +221,12 @@
 
         <TextView
             android:textColor="#fff"
+
             android:background="@drawable/back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
-            android:text="경기도 장학관"
+            android:text="경기도장학관"
             android:layout_weight="1"/>
 
         <LinearLayout
@@ -227,6 +242,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -236,6 +252,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -252,6 +269,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -261,6 +279,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -277,13 +296,15 @@
     </LinearLayout>
 
     <LinearLayout
-
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:textColor="#fff"
+
             android:background="@drawable/back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -304,6 +325,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -313,13 +335,14 @@
 
                 <TextView
                     android:textColor="#fff"
-                    android:background="@drawable/back"
+
+                    android:id="@+id/sFirstTime2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="0분"
                     android:layout_weight="2"
-                    android:id="@+id/sFirstTime2"/>
+                    android:background="@drawable/back"
+                    android:gravity="center_horizontal"
+                    android:text="0분" />
 
             </LinearLayout>
 
@@ -329,6 +352,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -338,6 +362,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -373,6 +398,8 @@
         android:gravity="center_horizontal"/>
 
     <LinearLayout
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -380,6 +407,7 @@
 
         <TextView
             android:textColor="#fff"
+
             android:background="@drawable/back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -400,6 +428,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -409,6 +438,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -425,6 +455,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -434,6 +465,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -450,13 +482,15 @@
     </LinearLayout>
 
     <LinearLayout
-
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:textColor="#fff"
+
             android:background="@drawable/back"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -478,6 +512,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -487,6 +522,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -503,6 +539,7 @@
 
                 <TextView
                     android:textColor="#fff"
+
                     android:background="@drawable/back"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

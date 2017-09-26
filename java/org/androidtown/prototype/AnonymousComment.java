@@ -8,6 +8,7 @@ public class AnonymousComment {
     public String comment;
     public String name;
     public String time;
+    public String order_time;
 
     public AnonymousComment(){
 
@@ -37,11 +38,12 @@ public class AnonymousComment {
         this.time = time;
     }
 
-    public AnonymousComment(String comment, String nickname, String time) {
+    public AnonymousComment(String comment, String nickname, String time, String order_time) {
 
         this.comment = comment;
         this.name = name;
         this.time = time;
+        this.order_time = order_time;
     }
 }
 

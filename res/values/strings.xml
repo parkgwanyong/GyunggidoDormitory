@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">prototype</string>
+    <string name="app_name">경기도장학관</string>
     <string name="select_building">Select Building</string>
     <string-array name="building_arrays">
         <item>율곡관</item>

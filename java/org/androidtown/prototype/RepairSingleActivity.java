@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,7 +34,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -55,12 +58,18 @@ public class RepairSingleActivity extends AppCompatActivity {
     private Button mRepairReadSubmitBtn;
     private Spinner mRepairReadSpinner;
 
+    private ImageView mRepairReadImage;
+
     private RecyclerView mRepairCommentList;
 
     private LinearLayout mReadTitleLayout;
 
     private ProgressDialog mRepairCommentProgress;
     private ProgressDialog mRepairDeleteProgress;
+    private ProgressDialog mRepairLoadDialog;
+
+    private String imageUri = "empty";
+
 
     private String nickname;
     private String mClass;
@@ -73,6 +82,10 @@ public class RepairSingleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_single);
 
+        mRepairLoadDialog = new ProgressDialog(this);
+        mRepairLoadDialog.setTitle("로딩중");
+        mRepairLoadDialog.setMessage("잠시만 기다려주세요.");
+        mRepairLoadDialog.show();
 
 
         mRepairCommentList = (RecyclerView) findViewById(R.id.repair_write_comments_list);
@@ -89,6 +102,8 @@ public class RepairSingleActivity extends AppCompatActivity {
         mRepairReadSubmitBtn = (Button) findViewById(R.id.repair_read_submit_btn);
 
         mReadTitleLayout = (LinearLayout) findViewById(R.id.repair_read_title_layout);
+
+        mRepairReadImage = (ImageView) findViewById(R.id.repair_read_image_view);
 
         mRepairReadTitle = (TextView) findViewById(R.id.repair_read_title);
         mRepairReadContents = (TextView) findViewById(R.id.repair_read_contents);
@@ -167,10 +182,27 @@ public class RepairSingleActivity extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 if (dataSnapshot.exists()) {
 
-                text = dataSnapshot.getValue(RepairMainDisplay.class);
+                    text = dataSnapshot.getValue(RepairMainDisplay.class);
 
-                mRepairReadTitle.setText(text.getTitle());
-                mRepairReadContents.setText(text.getContents());
+                    mRepairReadTitle.setText(text.getTitle());
+                    mRepairReadContents.setText(text.getContents());
+                    imageUri = text.getImage_uri();
+                    if(!imageUri.equals("empty")){
+                        Picasso.with(getApplicationContext()).load(imageUri).into(mRepairReadImage, new com.squareup.picasso.Callback(){
+                            @Override
+                            public void onSuccess() {
+                                mRepairLoadDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onError() {
+                                mRepairLoadDialog.dismiss();
+                                Toast.makeText(RepairSingleActivity.this,"사진을 불러올 수 없습니다.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        mRepairLoadDialog.dismiss();
+                    }
 
                 final String mStatus = text.getStatus().toString();
                 switch (mStatus) {
@@ -187,8 +219,8 @@ public class RepairSingleActivity extends AppCompatActivity {
                 }
 
 
-                ArrayAdapter<CharSequence> repairAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.repair_array, android.R.layout.simple_spinner_item);
-                repairAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                ArrayAdapter<CharSequence> repairAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.repair_array, R.layout.repair_spinner_item);
+                repairAdapter.setDropDownViewResource(R.layout.repair_spinner_item);
                 mRepairReadSpinner.setAdapter(repairAdapter);
                 if (!mStatus.equals(null)) {
                     int spinnerPosition = repairAdapter.getPosition(mStatus);
@@ -236,16 +268,32 @@ public class RepairSingleActivity extends AppCompatActivity {
         };
         mRepairDatabase.addValueEventListener(userListener);
 
+        mRepairReadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!imageUri.equals("empty")){
+                    Intent intent = new Intent(RepairSingleActivity.this, ImageZoomActivity.class);
+                    intent.putExtra("image_uri",imageUri);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.below_in, R.anim.below_out);
+                }
+            }
+        });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        Query repairDatabaseQuery;
+        repairDatabaseQuery = mRepairDatabase.child("comments").orderByChild("order_time");
+
         FirebaseRecyclerAdapter<RepairComment, RepairCommentViewHolder> firebaseCommentRecyclerAdapter = new FirebaseRecyclerAdapter<RepairComment, RepairCommentViewHolder>(
                 RepairComment.class,
                 R.layout.repair_comments_layout,
                 RepairCommentViewHolder.class,
-                mRepairDatabase.child("comments")
+                repairDatabaseQuery
         ) {
             @Override
             protected void populateViewHolder(RepairCommentViewHolder viewHolder, RepairComment model, int position) {
@@ -280,6 +328,7 @@ public class RepairSingleActivity extends AppCompatActivity {
         commentMap.put("comment",comments);
         commentMap.put("nickname",nickname);
         commentMap.put("time",currentDateandTime.toString());
+        commentMap.put("order_time", String.valueOf((System.currentTimeMillis())));
         mRepairCommentDatabase = mRepairDatabase.child("comments").push();
         final String commentTextKey = mRepairCommentDatabase.getKey();
 

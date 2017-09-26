@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,12 +52,17 @@ public class AnonymousReadActivity extends AppCompatActivity {
     private EditText mAnonymousReadComments;
     private Button mAnonymousReadSubmitBtn;
 
+    private ImageView mAnonymousReadImage;
+
     private ProgressDialog mAnonymousCommentDialog;
     private ProgressDialog mAnonymousDeleteDialog;
+    private ProgressDialog mAnonymousLoadDialog;
 
     private RecyclerView mAnonymousReadList;
 
     private MenuItem deleteBtn;
+
+    private String imageUri = "empty";
 
     private User user;
     private String mName = "";
@@ -66,9 +74,16 @@ public class AnonymousReadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anonymous_read);
 
+        mAnonymousLoadDialog = new ProgressDialog(this);
+        mAnonymousLoadDialog.setTitle("로딩중");
+        mAnonymousLoadDialog.setMessage("잠시만 기다려주세요.");
+        mAnonymousLoadDialog.show();
+
         mAnonymousReadList = (RecyclerView) findViewById(R.id.anonymous_read_comment_list);
         mAnonymousReadList.setNestedScrollingEnabled(false);
         mAnonymousReadList.setLayoutManager(new LinearLayoutManager(this));
+
+        mAnonymousReadImage = (ImageView) findViewById(R.id.anonymous_read_image_view);
 
         mToolbar = (Toolbar) findViewById(R.id.anonymous_read_appbar);
         setSupportActionBar(mToolbar);
@@ -106,6 +121,23 @@ public class AnonymousReadActivity extends AppCompatActivity {
                     anonymousText = dataSnapshot.getValue(Anonymous.class);
                     mAnonymousReadTitle.setText(anonymousText.getTitle());
                     mAnonymousReadContent.setText(anonymousText.getContents());
+                    imageUri = anonymousText.getImage_uri();
+                    if(!imageUri.equals("empty")){
+                        Picasso.with(getApplicationContext()).load(imageUri).into(mAnonymousReadImage, new com.squareup.picasso.Callback(){
+                            @Override
+                            public void onSuccess() {
+                                mAnonymousLoadDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onError() {
+                                mAnonymousLoadDialog.dismiss();
+                                Toast.makeText(AnonymousReadActivity.this,"사진을 불러올 수 없습니다.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        mAnonymousLoadDialog.dismiss();
+                    }
                 }
             }
             @Override
@@ -114,6 +146,19 @@ public class AnonymousReadActivity extends AppCompatActivity {
             }
         };
         mAnonymousDatabase.addValueEventListener(anonymousListener);
+
+
+        mAnonymousReadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!imageUri.equals("empty")){
+                    Intent intent = new Intent(AnonymousReadActivity.this, ImageZoomActivity.class);
+                    intent.putExtra("image_uri",imageUri);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.below_in, R.anim.below_out);
+                }
+            }
+        });
 
         ValueEventListener nameListener = new ValueEventListener() {
             @Override
@@ -160,6 +205,7 @@ public class AnonymousReadActivity extends AppCompatActivity {
         commentMap.put("comment",comments);
         commentMap.put("name",mName);
         commentMap.put("time",currentDateandTime.toString());
+        commentMap.put("order_time", String.valueOf((System.currentTimeMillis())));
         mAnonymousCommentDatabse = mAnonymousDatabase.child("comments").push();
 
         mAnonymousCommentDatabse.setValue(commentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -277,11 +323,15 @@ public class AnonymousReadActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        Query anonymousDatabaseQuery;
+        anonymousDatabaseQuery = mAnonymousDatabase.child("comments").orderByChild("order_time");
+
         FirebaseRecyclerAdapter<AnonymousComment, AnonymousCommentViewHolder> firebaseCommentRecyclerAdapter = new FirebaseRecyclerAdapter<AnonymousComment, AnonymousCommentViewHolder>(
                 AnonymousComment.class,
                 R.layout.anonymous_comments_layout,
                 AnonymousCommentViewHolder.class,
-                mAnonymousDatabase.child("comments")
+                anonymousDatabaseQuery
 
         ){
             @Override

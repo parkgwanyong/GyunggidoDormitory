@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <EditText
                 android:id="@+id/notice_write_title"
                 android:layout_width="match_parent"
@@ -28,26 +29,58 @@
                 android:layout_marginTop="4dp"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:hint="Title"
+                android:hint="제목"
                 android:padding="8dp"
                 android:textSize="15dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#E0E0E0"/>
+                android:background="#E0E0E0" />
 
             <EditText
-                android:gravity="top"
-                android:minHeight="150dp"
                 android:id="@+id/notice_write_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:hint="Contents"
+                android:gravity="top"
+                android:hint="내용"
+                android:minHeight="150dp"
                 android:padding="8dp"
                 android:textSize="15dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <Button
+                    android:id="@+id/notice_write_image_btn"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/image_upload"
+                    android:textColor="#fff"
+                    android:textSize="15dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0" />
+
+            <ImageView
+                android:padding="10dp"
+                android:id="@+id/notice_write_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop" />
 
         </LinearLayout>
     </ScrollView>

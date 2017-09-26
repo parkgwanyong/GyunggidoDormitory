@@ -93,7 +93,7 @@
         <EditText
             android:textColor="#fff"
             android:maxLines="1"
-            android:maxLength="30"
+            android:maxLength="20"
             android:id="@+id/sleep_destination_edit"
             android:hint="                     "
             android:backgroundTint="#aaa"
@@ -106,17 +106,14 @@
 
     <Button
         android:id="@+id/sleep_submit_btn"
-        android:layout_gravity="right"
-        android:textSize="15dp"
-        android:textColor="#fff"
-        android:text="Submit"
-        android:background="#385194"
-        android:layout_marginRight="10dp"
-        android:padding="0dp"
-        android:textAllCaps="false"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:background="#1C87B7"
+        android:text="신청"
+        android:textColor="#fff"
+        android:textSize="15dp" />
 
 
     <LinearLayout
@@ -130,7 +127,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1.2"
             android:padding="10dp"
             android:text="시작 날짜"
             android:gravity="center"
@@ -140,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
+
             android:textColor="#fff"
             android:text="~"
             android:textSize="20dp"/>
@@ -150,7 +147,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1.2"
             android:padding="10dp"
             android:text="종료 날짜"
             android:textColor="#fff" />
@@ -165,9 +162,10 @@
             android:layout_height="wrap_content"
             android:text="행선지"/>
         <TextView
+
             android:gravity="center"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:textColor="#e25049"
             android:padding="2dp"
             android:layout_width="0dp"
@@ -184,19 +182,19 @@
         android:background="#f9d7db"/>
 
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/sleep_display_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
-            android:gravity="center"
             android:id="@+id/sleep_date_from_display_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1.2"
+            android:gravity="center"
             android:padding="10dp"
             android:text="시작 날짜"
             android:textColor="#fff" />
@@ -205,45 +203,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
-            android:textColor="#fff"
+
             android:text="~"
-            android:textSize="20dp"/>
+            android:textColor="#fff"
+            android:textSize="20dp" />
 
         <TextView
-            android:gravity="center"
             android:id="@+id/sleep_date_to_display_txt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="2"
+            android:layout_weight="1.2"
+            android:gravity="center"
             android:padding="10dp"
             android:text="종료날짜"
             android:textColor="#fff" />
 
         <TextView
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_weight="1"
             android:id="@+id/sleep_destination_display_txt"
-            android:textColor="#fff"
-            android:padding="10dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="행선지"/>
-        <LinearLayout
+            android:layout_gravity="center"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="행선지"
+            android:textColor="#fff" />
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="right">
+            android:layout_weight="0.7"
+            android:gravity="right"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/sleep_cancel_display_btn"
-                android:layout_marginRight="15dp"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:background="@drawable/sleep_cancel_icon"/>
+                android:layout_marginRight="20dp"
+                android:background="@drawable/sleep_cancel_icon" />
         </LinearLayout>
     </LinearLayout>
 

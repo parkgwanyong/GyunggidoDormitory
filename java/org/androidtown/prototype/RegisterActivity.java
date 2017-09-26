@@ -141,12 +141,18 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }else if(TextUtils.isEmpty(birthDate)) {
                     Toast.makeText(RegisterActivity.this, "생년월일을 입력해 주세요", Toast.LENGTH_SHORT).show();
+                }else if(birthDate.length() != 6 ){
+                    Toast.makeText(RegisterActivity.this, "생년월일을 확인해 주세요", Toast.LENGTH_SHORT).show();
                 }else if(TextUtils.isEmpty(phoneNumber)){
                     Toast.makeText(RegisterActivity.this, "핸드폰 번호를 입력해 주세요.", Toast.LENGTH_SHORT).show();
-                }else if(mclass.equals("재사생") && TextUtils.isEmpty(buildingNumber)) {
+                }else if(phoneNumber.length() != 11){
+                    Toast.makeText(RegisterActivity.this, "핸드폰 번호를 확인해 주세요.", Toast.LENGTH_SHORT).show();
+                } else if(mclass.equals("재사생") && TextUtils.isEmpty(buildingNumber)) {
                     Toast.makeText(RegisterActivity.this, "방 번호를 입력해 주세요", Toast.LENGTH_SHORT).show();
+                }else if(mclass.equals("재사생") && buildingNumber.length() != 3){
+                    Toast.makeText(RegisterActivity.this, "방 번호를 확인해 주세요", Toast.LENGTH_SHORT).show();
                 }else{
-                    mRegProgress.setTitle("등록 중");
+                    mRegProgress.setTitle("등록중");
                     mRegProgress.setMessage("등록하는 동안 잠시만 기다려 주세요.");
                     mRegProgress.setCanceledOnTouchOutside(false);
 
@@ -377,7 +383,12 @@ public class RegisterActivity extends AppCompatActivity {
                         userMap.put("email", email);
                         userMap.put("password", password);
                         userMap.put("birth_date", birthDate);
-                        userMap.put("council","false");
+                        if(mclass.equals("직원")){
+                            userMap.put("council","직원");
+                        }else{
+                            userMap.put("council","false");
+                        }
+
                         userMap.put("phone_number",phoneNumber);
                         if(mclass.equals("재사생")) {
                             userMap.put("building", mBuilding);
@@ -408,7 +419,7 @@ public class RegisterActivity extends AppCompatActivity {
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthWeakPasswordException e) {
-                            error = "비밀번호를 좀 더 어렵게 바꿔주세요.";
+                            error = "비밀번호를 여섯자리 이상으로 입력해 주세요.";
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             error = "이메일을 확인해 주세요";
                         } catch (FirebaseAuthUserCollisionException e) {

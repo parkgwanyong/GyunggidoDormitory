@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,12 +52,17 @@ public class BoardReadActivity extends AppCompatActivity {
     private EditText mBoardReadComments;
     private Button mBoardReadSubmitBtn;
 
+    private ImageView mBoardReadImage;
+
     private ProgressDialog mBoardCommentDialog;
     private ProgressDialog mBoardDeleteDialog;
+    private ProgressDialog mBoardLoadDialog;
 
     private RecyclerView mBoardReadList;
 
     private MenuItem deleteBtn;
+
+    private String imageUri = "empty";
 
     private User user;
     private String mNickname = "";
@@ -65,6 +73,11 @@ public class BoardReadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_read);
+
+        mBoardLoadDialog = new ProgressDialog(this);
+        mBoardLoadDialog.setTitle("로딩중");
+        mBoardLoadDialog.setMessage("잠시만 기다려주세요.");
+        mBoardLoadDialog.show();
 
         mBoardReadList = (RecyclerView) findViewById(R.id.board_read_comment_list);
         mBoardReadList.setNestedScrollingEnabled(false);
@@ -79,6 +92,8 @@ public class BoardReadActivity extends AppCompatActivity {
         mBoardReadSubmitBtn = (Button) findViewById(R.id.board_read_comment_submit_btn);
         mBoardReadTitle = (TextView) findViewById(R.id.board_read_title);
         mBoardReadContent = (TextView) findViewById(R.id.board_read_contents);
+
+        mBoardReadImage = (ImageView) findViewById(R.id.board_read_image_view);
 
         final String user_id = getIntent().getStringExtra("user_id");
         //글 작성자
@@ -108,6 +123,23 @@ public class BoardReadActivity extends AppCompatActivity {
 
                     mBoardReadTitle.setText(boardText.getTitle());
                     mBoardReadContent.setText(boardText.getContents());
+                    imageUri = boardText.getImage_uri();
+                    if(!imageUri.equals("empty")){
+                        Picasso.with(getApplicationContext()).load(imageUri).into(mBoardReadImage, new com.squareup.picasso.Callback(){
+                            @Override
+                            public void onSuccess() {
+                                mBoardLoadDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onError() {
+                                mBoardLoadDialog.dismiss();
+                                Toast.makeText(BoardReadActivity.this,"사진을 불러올 수 없습니다.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }else{
+                        mBoardLoadDialog.dismiss();
+                    }
 
                 }
 
@@ -115,11 +147,24 @@ public class BoardReadActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                mBoardLoadDialog.dismiss();
                 Toast.makeText(BoardReadActivity.this,databaseError.toString(),Toast.LENGTH_SHORT).show();
 
             }
         };
         mBoardDatabase.addValueEventListener(boardListener);
+
+        mBoardReadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!imageUri.equals("empty")){
+                    Intent intent = new Intent(BoardReadActivity.this, ImageZoomActivity.class);
+                    intent.putExtra("image_uri",imageUri);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.below_in, R.anim.below_out);
+                }
+            }
+        });
 
         ValueEventListener nicknameListener = new ValueEventListener() {
             @Override
@@ -166,6 +211,7 @@ public class BoardReadActivity extends AppCompatActivity {
         commentMap.put("comment",comments);
         commentMap.put("nickname",mNickname);
         commentMap.put("time",currentDateandTime.toString());
+        commentMap.put("order_time", String.valueOf((System.currentTimeMillis())));
         mBoardCommentDatabse = mBoardDatabase.child("comments").push();
 
         mBoardCommentDatabse.setValue(commentMap).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -283,18 +329,22 @@ public class BoardReadActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        Query boardDatabaseQuery;
+        boardDatabaseQuery = mBoardDatabase.child("comments").orderByChild("order_time");
+
         FirebaseRecyclerAdapter<BoardComment, boardCommentViewHolder> firebaseCommentRecyclerAdapter = new FirebaseRecyclerAdapter<BoardComment, boardCommentViewHolder>(
                 BoardComment.class,
                 R.layout.board_comments_layout,
                 boardCommentViewHolder.class,
-                mBoardDatabase.child("comments")
+                boardDatabaseQuery
 
         ) {
             @Override
             protected void populateViewHolder(boardCommentViewHolder viewHolder, BoardComment model, int position) {
                 viewHolder.setDate(model.getTime());
                 viewHolder.setContent(model.getComment());
-                viewHolder.setNickname(mNickname);
+                viewHolder.setNickname(model.getNickname());
 
 
             }

@@ -3,10 +3,12 @@ package org.androidtown.prototype;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -63,7 +65,9 @@ public class SleepActivity extends AppCompatActivity {
     private int year_y = initialCalendar.get(Calendar.YEAR);
     private int month_y = initialCalendar.get(Calendar.MONTH) + 1;
     private int day_y = initialCalendar.get(Calendar.DAY_OF_MONTH) +1;
-    private int mHour = initialCalendar.get(Calendar.HOUR);
+
+    private int mHour = initialCalendar.get(Calendar.HOUR_OF_DAY);
+
     private long start_time = System.currentTimeMillis();
     private DatePickerDialog datePickerDialog;
 
@@ -161,24 +165,46 @@ public class SleepActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View view) {
 
-                                mSleepDeleteProgress.setTitle("삭제중");
-                                mSleepDeleteProgress.setMessage("잠시만 기다려 주세요.");
-                                mSleepDeleteProgress.setCanceledOnTouchOutside(false);
-                                mSleepDeleteProgress.show();
-                                mSleepOnceDatabase.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                final AlertDialog alertDialog = new AlertDialog.Builder(SleepActivity.this)
+                                        .setTitle("삭제")
+                                        .setMessage("외박 신청을 취소하시겠습니까?")
+                                        .setPositiveButton("네", new DialogInterface.OnClickListener(){
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mSleepDeleteProgress.setTitle("삭제중");
+                                                mSleepDeleteProgress.setMessage("잠시만 기다려 주세요.");
+                                                mSleepDeleteProgress.setCanceledOnTouchOutside(false);
+                                                mSleepDeleteProgress.show();
+                                                mSleepOnceDatabase.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            mSleepDeleteProgress.dismiss();
+                                                            submitExist = false;
+                                                            mSleepSubmitBtn.setBackgroundColor(Color.parseColor("#1C87B7"));
+                                                        } else {
+                                                            mSleepDeleteProgress.dismiss();
+                                                            Toast.makeText(SleepActivity.this, "데이터베이스 오류! 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        })
+                                        .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        })
+                                        .create();
+                                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            mSleepDeleteProgress.dismiss();
-                                            submitExist = false;
-                                            mSleepSubmitBtn.setBackgroundColor(Color.parseColor("#385194"));
-                                        } else {
-                                            mSleepDeleteProgress.dismiss();
-                                            Toast.makeText(SleepActivity.this, "데이터베이스 오류! 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
-                                        }
+                                    public void onShow(DialogInterface dialog) {
+                                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#FF1744"));
+                                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#000000"));
                                     }
                                 });
-
+                                alertDialog.show();
                             }
                         });
 
@@ -188,7 +214,7 @@ public class SleepActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     submitExist = false;
-                                    mSleepSubmitBtn.setBackgroundColor(Color.parseColor("#385194"));
+                                    mSleepSubmitBtn.setBackgroundColor(Color.parseColor("#1C87B7"));
                                 } else {
                                     Toast.makeText(SleepActivity.this, "데이터베이스 오류! 다시 시도해 주세요.", Toast.LENGTH_SHORT).show();
                                 }
@@ -290,7 +316,7 @@ public class SleepActivity extends AppCompatActivity {
                             mSleepStaffDatabase = FirebaseDatabase.getInstance().getReference().child("SleepOut_staff").child(str_date).child(user.getName());
 
                             HashMap<String, String> userMap = new HashMap<String, String>();
-                            userMap.put("date", year_x + "년 " + month_x + "월 " + day_x + "일" + " ~ " + year_y + "년 " + month_y + "월 " + day_y + "일" + "까지");
+                            userMap.put("date", year_x + "년 " + month_x + "월 " + day_x + "일 " + " ~ " + year_y + "년 " + month_y + "월 " + day_y + "일" + "까지");
                             userMap.put("destination", destination);
                             userMap.put("building", user.getBuilding() + " " + user.getBuilding_number());
 
